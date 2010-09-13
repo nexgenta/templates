@@ -1,0 +1,59 @@
+<?php require(dirname(__FILE__) . '/header.php'); ?>
+
+<div id="primary">
+
+<div class="section">
+<?php
+
+	 if(isset($object->image))
+	 {
+		 writeLn('<p class="depiction"><img src="' . _e($object->image) . '"></p>');
+	 }
+?>
+<p>
+Video player would go here. When retrieving versions and selecting an
+available location is implemented, at any rate.
+</p>
+
+<p><?php echo str_replace("\n", '<br>', _e($object->description)); ?></p>
+</div>
+
+</div>
+
+<div id="secondary">
+
+  <h2>Sidebar whatnots</h3>
+
+<h3>Genres:</h3>
+<ul>
+<?php
+foreach($object->genres as $genre)
+{
+	echo '<li><a href="' . _e($genre) . '">' . $genre . '</a></li>';
+}
+?>
+</ul>
+
+<h3>Formats:</h3>
+<ul>
+<?php
+foreach($object->formats as $format)
+{
+	echo '<li><a href="' . _e($format) . '">' . $format . '</a></li>';
+}
+?>
+</ul>
+
+<h3>Topics:</h3>
+<ul>
+<?php
+foreach($object->topics as $topic)
+{
+	echo '<li><a href="' . _e($topic) . '">' . $topic . '</a></li>';
+}
+?>
+</ul>
+
+</div>
+
+<?php require(dirname(__FILE__) . '/footer.php');
