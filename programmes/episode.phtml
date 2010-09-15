@@ -24,6 +24,31 @@ available location is implemented, at any rate.
 
   <h2>Sidebar whatnots</h3>
 
+<?php
+
+	 if(isset($object['series']))
+	 {
+		 
+	 }
+	 else if(isset($object['show']))
+	 {
+		 writeLn('<div class="section episode-position">');
+		 if(isset($object->episodeNumber))
+		 {
+			 writeLn('<p>Episode ' . _e($object->episodeNumber) . ' of <a href="' . _e($app_root . $object['show']->relativeURI) . '">' . _e($object['show']->title) . '</a></p>');
+		 }
+		 else
+		 {
+			 writeLn('<p>An episode of <a href="' . _e($app_root . $object['show']->reltiveURI) . '">' . _e($object['show']->title) . '</a></p>');
+		 }
+		 writeLn('</div>');
+	 }
+?>
+
+<?php if(isset($object->genres))
+{
+?>
+<div class="section genre-list tag-list">
 <h3>Genres:</h3>
 <ul>
 <?php
@@ -33,7 +58,12 @@ foreach($object->genres as $genre)
 }
 ?>
 </ul>
+</div>
+<?php } ?>
 
+<?php if(isset($object->formats))
+{
+?>
 <h3>Formats:</h3>
 <ul>
 <?php
@@ -43,7 +73,13 @@ foreach($object->formats as $format)
 }
 ?>
 </ul>
+<?php
+}
+?>
 
+<?php if(isset($object->topics))
+{
+?>
 <h3>Topics:</h3>
 <ul>
 <?php
@@ -53,7 +89,9 @@ foreach($object->topics as $topic)
 }
 ?>
 </ul>
-
+<?php
+}
+?>
 </div>
 
 <?php require(dirname(__FILE__) . '/footer.php');

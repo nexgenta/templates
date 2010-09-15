@@ -5,18 +5,8 @@
 <?php require(dirname(__FILE__) . '/a-z.php'); ?>
 </div>
 
-<div class="section prog-list">
+<?php require(dirname(__FILE__) . '/item-list.php'); ?>
 
-<ul>
-<?php
-
-	 while(($prog = $objects->next()))
-	 {
-		 echo '<li><a href="' . _e($app_root . $prog->relativeURI) . '">' . _e($prog->title) . '</a></li>';
-	 }
-
-?>
-</ul>
 
 <?php require(dirname(__FILE__) . '/footer.php');
 		 

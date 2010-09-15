@@ -1,0 +1,18 @@
+<?php require(dirname(__FILE__) . '/header.php'); ?>
+
+<?php
+if($children && !$children->EOF)
+{
+	writeLn('<div class="narrow-filter section">');
+	writeLn('<h2>Narrow your selection</h2>');
+	writeLn('<ul>');
+	while(($obj = $children->next()))
+	{
+		writeLn('<li><a href="' . _e($pageUri . $obj->slug) . '">' . _e($obj->title) . '</a></li>');
+	}
+	writeLn('</ul>');
+	writeLn('</div>');
+}
+?>
+
+<?php require(dirname(__FILE__) . '/item-list.php'); ?>
