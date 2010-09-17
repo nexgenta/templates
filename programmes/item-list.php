@@ -1,3 +1,7 @@
+<?php
+if(isset($objects) && !$objects->EOF)
+{
+?>
 <div class="section prog-list">
 
 <ul>
@@ -10,3 +14,6 @@
 
 ?>
 </ul>
+<?php
+}
+?>

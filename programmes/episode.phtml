@@ -22,8 +22,6 @@ available location is implemented, at any rate.
 
 <div id="secondary">
 
-  <h2>Sidebar whatnots</h3>
-
 <?php
 
 	 if(isset($object['series']))
@@ -45,53 +43,7 @@ available location is implemented, at any rate.
 	 }
 ?>
 
-<?php if(isset($object->genres))
-{
-?>
-<div class="section genre-list tag-list">
-<h3>Genres:</h3>
-<ul>
-<?php
-foreach($object->genres as $genre)
-{
-	echo '<li><a href="' . _e($genre) . '">' . $genre . '</a></li>';
-}
-?>
-</ul>
-</div>
-<?php } ?>
-
-<?php if(isset($object->formats))
-{
-?>
-<h3>Formats:</h3>
-<ul>
-<?php
-foreach($object->formats as $format)
-{
-	echo '<li><a href="' . _e($format) . '">' . $format . '</a></li>';
-}
-?>
-</ul>
-<?php
-}
-?>
-
-<?php if(isset($object->topics))
-{
-?>
-<h3>Topics:</h3>
-<ul>
-<?php
-foreach($object->topics as $topic)
-{
-	echo '<li><a href="' . _e($topic) . '">' . $topic . '</a></li>';
-}
-?>
-</ul>
-<?php
-}
-?>
+<?php require(dirname(__FILE__) . '/related-content.php'); ?>
 </div>
 
 <?php require(dirname(__FILE__) . '/footer.php');

@@ -1,6 +1,23 @@
 <?php require(dirname(__FILE__) . '/header.php'); ?>
 
 <?php
+
+if(isset($object))
+{
+	echo '<div class="section">';
+	if(isset($object['parent']))
+	{
+		echo '<p><a href="' . _e($root . '/' . $object['parent']->relativeURI) . '">Back to ' . _e($object['parent']->title) . '</a></p>';
+	}
+	else
+	{
+		echo '<p><a href="' . _e($root) . '">Back to all ' . _e($kindTitle) . '</a></p>';
+	}
+	echo '</div>';
+}
+?>
+
+<?php
 if($children && !$children->EOF)
 {
 	writeLn('<div class="narrow-filter section">');
