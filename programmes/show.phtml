@@ -1,4 +1,11 @@
-<?php require(dirname(__FILE__) . '/header.php'); ?>
+<?php require(dirname(__FILE__) . '/header.php');
+
+if(isset($custom['header']))
+{
+	require(dirname(__FILE__) . '/' . $custom['header']);
+}
+
+?>
 
 <div id="primary">
 
@@ -50,7 +57,12 @@
 ?>
 	</dl>
 </div>
-<?php } ?>
+<?php }
+
+	require(dirname(__FILE__) . '/object-microsite.php');
+	require(dirname(__FILE__) . '/object-legal.php');
+
+?>
 
 </div>
 

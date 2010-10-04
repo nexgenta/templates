@@ -2,30 +2,39 @@
 
 <?php
 
-if(isset($object))
+if(isset($object) && $object->kind != 'scheme')
 {
 	echo '<div class="section">';
 	if(isset($object['parent']))
 	{
-		echo '<p><a href="' . _e($root . '/' . $object['parent']->relativeURI) . '">Back to ' . _e($object['parent']->title) . '</a></p>';
-	}
-	else
-	{
-		echo '<p><a href="' . _e($root) . '">Back to all ' . _e($kindTitle) . '</a></p>';
+		echo '<p><a href="' . _e($root . $object['parent']->relativeURI) . '">Back to ' . _e($object['parent']->title) . '</a></p>';
 	}
 	echo '</div>';
 }
-?>
 
-<?php
+if(isset($object['description']))
+{
+	echo '<div class="section">';
+	echo '<p>' . str_replace("\n", '<br>', _e($object->description)) . '</p>';
+	echo '</div>';
+}
+
 if($children && !$children->EOF)
 {
 	writeLn('<div class="narrow-filter section">');
-	writeLn('<h2>Narrow your selection</h2>');
-	writeLn('<ul>');
-	while(($obj = $children->next()))
+	if($object->kind != 'scheme')
 	{
-		writeLn('<li><a href="' . _e($pageUri . $obj->slug) . '">' . _e($obj->title) . '</a></li>');
+		writeLn('<h2>Narrow your selection</h2>');
+	}
+	writeLn('<ul>');
+	foreach($children as $obj)
+	{
+		$extra = '';
+		if(!empty($request->query['_show_uuids']))
+		{
+			$extra = ' <code>{' . $obj->uuid . '}</code>';
+		}
+		writeLn('<li><a href="' . _e($root . $obj->relativeURI) . '">' . _e($obj->title) . '</a>' . $extra . '</li>');
 	}
 	writeLn('</ul>');
 	writeLn('</div>');
@@ -33,3 +42,6 @@ if($children && !$children->EOF)
 ?>
 
 <?php require(dirname(__FILE__) . '/item-list.php'); ?>
+
+<?php
+require(dirname(__FILE__) . '/footer.php');

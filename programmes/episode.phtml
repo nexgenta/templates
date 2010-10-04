@@ -5,18 +5,48 @@
 <div class="section">
 <?php
 
-	 if(isset($object->image))
+	 if(isset($version))
+	 {
+		 if($version->hasVideo)
+		 {
+			 echo '<div class="player-wrap video-wrap"><video class="player" controls>' . "\n";
+			 $el = 'video';
+		 }
+		 else if($version->hasAudio)
+		 {
+			 echo '<div class="player-wrap audio-wrap"><audio class="player" controls>' . "\n";
+			 $el = 'audio';
+		 }
+		 else
+		 {
+			 $el = null;
+		 }
+		 if(strlen($el))
+		 {
+			 foreach($version->resources as $res)
+			 {
+				 if(!$res->available)
+				 {
+					 continue;
+				 }
+				 if(!strncmp($res->dataContainerFormat, $el . '/', strlen($el) + 1))
+				 {
+					 echo '<source type="' . _e($res->dataContainerFormat) . '" src="' . _e($res->uri) . '">' . "\n";
+				 }
+			 }
+			 echo '</' . $el . '></div>' . "\n";
+		 }
+	 }
+	 else if(isset($object->image))
 	 {
 		 writeLn('<p class="depiction"><img src="' . _e($object->image) . '"></p>');
 	 }
 ?>
-<p>
-Video player would go here. When retrieving versions and selecting an
-available location is implemented, at any rate.
-</p>
 
 <p><?php echo str_replace("\n", '<br>', _e($object->description)); ?></p>
 </div>
+
+<?php require('object-legal.php'); ?>
 
 </div>
 
@@ -37,10 +67,11 @@ available location is implemented, at any rate.
 		 }
 		 else
 		 {
-			 writeLn('<p>An episode of <a href="' . _e($app_root . $object['show']->reltiveURI) . '">' . _e($object['show']->title) . '</a></p>');
+			 writeLn('<p>An episode of <a href="' . _e($app_root . $object['show']->relativeURI) . '">' . _e($object['show']->title) . '</a></p>');
 		 }
 		 writeLn('</div>');
 	 }
+
 ?>
 
 <?php require(dirname(__FILE__) . '/related-content.php'); ?>
