@@ -1,0 +1,68 @@
+<?php
+require(dirname(__FILE__) . '/header.php');
+
+writeLn('<div class="events section">');
+writeLn('<h2>Story Timeline</h2>');
+writeLn('<div id="storyline-data">');
+writeLn('</div>');
+writeLn('<ul class="storyline">');
+foreach($object['events'] as $obj)
+{
+	$date = 'Date Unknown';
+	if(isset($obj->date))
+	{
+		$date = $obj->date;
+	}
+	$synopsis = '';
+	if(isset($obj->shortDescription))
+	{
+		$synopsis = $obj->shortDescription;
+	}
+	if(isset($obj->thumbnail))
+	{
+		$style = ' style="background-image: url(\'' . _e($obj->thumbnail) . '\');"';
+	}
+	else
+	{
+		$style = '';
+	}
+	writeLn('<li ' .
+			'data-title="' . _e($obj->title) . '" ' .
+			'data-date="' . _e($date) . '" ' .
+			'data-synopsis="' . _e($synopsis) . '">' .
+			'<a ' . $style . 'href="' . _e($request->root . $obj->relativeURI) . '" title="' . _e($date . ': ' . $obj->title) . '">&nbsp;</a>' .
+			'</li>');
+}
+writeLn('</ul>');
+writeLn('</div>');
+
+writeLn('<div id="primary">');
+
+writeLn('</div>');
+writeLn('<div id="secondary">');
+if(isset($object->description))
+{
+	writeLn('<div class="section"><h2>Story synopsis</h2><p>' . _e($object->description) . '</p></div>');
+}
+if(isset($object->links))
+{
+	writeLn('<div class="section link-list">');
+	writeLn('<h3>Links:</h3>');
+	writeLn('<ul>');
+	foreach($object->links as $link)
+	{
+        $buf = '<a href="' . _e($link['href'])  .'"';
+        if(isset($link['rel']))
+        {
+			$buf .= ' rel="' . _e($link['rel']) . '"';
+        }
+        $buf .= '>' . _e($link['title']) . '</a>';
+        echo '<li>' . $buf . '</li>' . "\n";
+	}
+	writeLn('</ul>');
+	writeLn('</div>');
+}
+writeLn('</div>');
+writeLn('<script src="' . _e($skin_iri) . 'storyline.js"></script>');
+
+require(dirname(__FILE__) . '/footer.php');

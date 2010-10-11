@@ -1,0 +1,41 @@
+#emp embed {
+	display: block;
+	margin: 8px auto 8px auto;
+}
+.storyline {
+	display: block;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	border-top: solid #666 1px;
+}
+.storyline li {
+	display: inline-block;
+	margin: 4px;
+	padding: 0;
+	list-style: none;
+	text-indent: -11000em;
+	position: relative;
+}
+.storyline li a {
+	display: block;
+	background-color: #000;
+	background-position: -4px -4px;
+	width: 64px;
+	height: 64px;
+	text-decoration: none !important;
+	border: solid #fff 2px;
+}
+.storyline li a:hover {
+	border: solid #8888ff 2px;
+}
+
+#storyline-data {
+	height: 5em;
+	padding-left: 32px;	
+}
+#storyline-data h3 {
+	font-weight: bold;
+	font-size: 108%;
+}
+
