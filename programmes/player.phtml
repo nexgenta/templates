@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="generator" content="Eregansu">
+	    <title><?php e($page_title); ?></title>
+		<link rel="stylesheet" href="<?php e($skin_iri . 'player.css'); ?>" type="text/css">
+    </head>
+	<body>
+<?php
+
+$embeds = array();
+$sources = array();
+$embedTypes = array();
+if($version->hasVideo)
+{
+	$el = 'video';
+}
+else if($version->hasAudio)
+{
+	$el = 'audio';
+}
+else
+{
+	$el = null;
+}
+foreach($version->resources as $res)
+{
+	if(!$res->available)
+	{
+		continue;
+	}
+	if(!strncmp($res->dataContainerFormat, 'application/', 12))
+	{
+		$embeds[] = $res;
+		$embedTypes[$res->dataContainerFormat] = true;
+	}
+	else if(strlen($el) && !strncmp($res->dataContainerFormat, $el . '/', strlen($el) + 1))
+	{
+		$sources[] = '<source type="' . _e($res->dataContainerFormat) . '" src="' . _e($res->uri) . '">' . "\n";
+	}
+}
+if(isset($embedTypes['application/vnd.bbc.playlist+xml']))
+{
+	writeLn('<script type="text/javascript" src="http://www.bbc.co.uk/emp/swfobject.js"></script>');
+	writeLn('<script type="text/javascript" src="http://www.bbc.co.uk/emp/embed.js"></script>');
+}	
+if(count($sources))
+{
+	if($el == 'video')
+	{
+		echo '<div id="player-wrap" class="video-wrap"><video class="player" controls>' . "\n";
+	}
+	else if($el == 'audio')
+	{
+		echo '<div id="player-wrap" class="audio-wrap">';
+		if(isset($episode->image))
+		{
+			echo '<p class="depiction"><img src="' . _e($object->image) . '"></p>';
+		}
+		echo '<audio class="player" controls>' . "\n";
+	}
+	echo implode("\n", $sources);
+}
+$empId = 0;
+foreach($embeds as $embed)
+{
+	if($embed->dataContainerFormat == 'application/vnd.bbc.playlist+xml')
+	{
+		$dims = $embed->dimensions();
+		$empId++;
+		writeLn('<div id="emp' . $empId . '" class="emp"></div>');
+		writeLn('<script>' .
+				'var emp = new bbc.Emp();' .
+				'emp.setDomId("emp' . $empId . '");' .
+				'emp.setWidth(' . $dims[0] . ');' .
+				'emp.setHeight(' . $dims[1] . ');' .
+				'emp.setPlaylist("' . _e($embed->uri) . '");' .
+				'emp.write();' .
+				'</script>');
+	}
+}
+if(count($sources))
+{
+	echo '</' . $el . '></div>' . "\n";
+}
+if(!count($sources) && !count($embeds) && isset($episode->image))
+{
+	writeLn('<p class="depiction"><img src="' . _e($object->image) . '"></p>');
+}
+?>
+	</body>
+</html>
