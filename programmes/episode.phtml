@@ -4,42 +4,10 @@
 
 <div class="section">
 <?php
-
 	 if(isset($version))
 	 {
-		 if($version->hasVideo)
-		 {
-			 echo '<div class="player-wrap video-wrap"><video class="player" controls>' . "\n";
-			 $el = 'video';
-		 }
-		 else if($version->hasAudio)
-		 {
-			 echo '<div class="player-wrap audio-wrap"><audio class="player" controls>' . "\n";
-			 $el = 'audio';
-		 }
-		 else
-		 {
-			 $el = null;
-		 }
-		 if(strlen($el))
-		 {
-			 foreach($version->resources as $res)
-			 {
-				 if(!$res->available)
-				 {
-					 continue;
-				 }
-				 if(!strncmp($res->dataContainerFormat, $el . '/', strlen($el) + 1))
-				 {
-					 echo '<source type="' . _e($res->dataContainerFormat) . '" src="' . _e($res->uri) . '">' . "\n";
-				 }
-			 }
-			 echo '</' . $el . '></div>' . "\n";
-		 }
-	 }
-	 else if(isset($object->image))
-	 {
-		 writeLn('<p class="depiction"><img src="' . _e($object->image) . '"></p>');
+		 $dims = $version->dimensions;
+		 echo '<iframe class="player" src="' . _e($app_root . $version->relativeURI . '/player') . '" width="' . _e($dims[0]) . '" height="' . _e($dims[1]) . '" type="text/html" frameborder="0"></iframe>' . "\n";
 	 }
 ?>
 
