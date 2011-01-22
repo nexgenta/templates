@@ -24,39 +24,46 @@ foreach($object['links'] as $link)
 ?>
 
 
-<?php if(isset($object['genres']) && count($object['genres']))
+<?php
+if((isset($object['genres']) && count($object['genres'])) ||
+   (isset($object['formats']) && count($object['formats'])))
 {
 ?>
 <div class="section genre-list tag-list">
-<h3>Genres:</h3>
+<h3>More like this:</h3>
 <ul>
 <?php
-foreach($object['genres'] as $genre)
-{	
-	echo '<li><a href="' . _e(isset($genre->uri) ? $genre->uri : $app_root . $genre->relativeURI) . '">' . _e($genre->title) . '</a></li>';
+if(isset($object['genres']))
+{
+	foreach($object['genres'] as $obj)
+	{	
+		$links = array();
+		while($obj && $obj->kind != 'scheme')
+		{
+			array_unshift($links, '<a href="' . _e(isset($obj->uri) ? $obj->uri : $app_root . $obj->relativeURI) . '">' . _e($obj->title) . '</a>');
+			$obj = $obj['parent'];
+		}
+		echo '<li>' . implode(' &gt; ', $links) . '</li>';
+	}
+}
+if(isset($object['formats']))
+{
+	foreach($object['formats'] as $obj)
+	{	
+		$links = array();
+		while($obj && $obj->kind != 'scheme')
+		{
+			array_unshift($links, '<a href="' . _e(isset($obj->uri) ? $obj->uri : $app_root . $obj->relativeURI) . '">' . _e($obj->title) . '</a>');
+			$obj = $obj['parent'];
+		}
+		echo '<li>' . implode(' &gt; ', $links) . '</li>';
+	}
 }
 ?>
 </ul>
 </div>
 <?php } ?>
 
-<?php if(isset($object['formats']) && count($object['formats']))
-{
-?>
-<div class="section format-list tag-list">
-<h3>Formats:</h3>
-<ul>
-<?php
-foreach($object['formats'] as $obj)
-{
-	echo '<li><a href="' . _e(isset($obj->uri) ? $obj->uri : $app_root . $obj->relativeURI) . '">' . _e($obj->title) . '</a></li>';
-}
-?>
-</ul>
-</div>
-<?php
-}
-?>
 
 <?php if(isset($object['topics']) && count($object['topics']))
 {
