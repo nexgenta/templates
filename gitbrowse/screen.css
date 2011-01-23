@@ -1,13 +1,26 @@
 #commit-info {
 	background: #DCE7EB;
 	padding: 8px;
+	border: solid #BEDCE7 1px;
 	-webkit-border-radius: 6px 6px;
 	-moz-border-radius: 6px;
 	margin: 0 0 1em 0;
+	position: relative;
 }
 #commit-info img {
 	outline: solid #aaa 1px;
 	border: solid #fff 2px;
+}
+#commit-info dl {
+	font-size: 85%;
+	position: absolute;
+	right: 8px;
+	top: 0;
+	border-left: solid #BEDCE7 1px;
+	font-family: Monaco, 'Courier New', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', monospace;
+}
+#commit-info dt, #commit-info dd {
+	font-weight: normal;
 }
 
 table.tree {

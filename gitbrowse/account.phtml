@@ -6,10 +6,6 @@ require_once(dirname(__FILE__) . '/header.php');
 <ul>
 <?php foreach($objects as $name => $info)
 {
-		if(!empty($info['hidden']))
-		{
-			continue;
-		}
 ?>
 	<li><a href="<?php e($pageUri . $name); ?>"><?php
 	if(isset($info['name']))

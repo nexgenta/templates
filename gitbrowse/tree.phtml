@@ -13,12 +13,22 @@
 	</p>
 
 	<?php } ?>
+	<dl>
+		<dt>commit</dt>
+		<dd><a href="#"><?php e(substr($info['commit'], 0, 20)); ?></a></dd>
+		<dt>tree</dt>
+		<dd><a href="#"><?php e(substr($info['tree'], 0, 20)); ?></a></dd>
+		<?php if(isset($info['parent'])) {  ?>
+		<dt>parent</dt>
+		<dd><a href="#"><?php e(substr($info['parent'], 0, 20)); ?></a></dd>
+		<?php } ?>
+	</dl>
   </header>
   
   <table class="tree">
 	<thead>
 	  <tr>
-		<th scope="col">Name</th>
+		<th scope="col" class="name">Name</th>
 		<th scope="col">Age</th>
 		<th scope="col">Message</th>
 	  </tr>
@@ -33,7 +43,7 @@
 {
 ?>
       <tr>
-		<td class="<?php e($entry['type']); ?>">
+		<td class="name <?php e($entry['type']); ?>">
 <?php
    if($entry['type'] == 'subdir')
    {
@@ -46,7 +56,7 @@
    e($entry['name']);
    echo '</a>';
    ?></td>
-		<td><?php if($entry['commit']) e($entry['commit']['committer-date']); ?></td>
+		<td><?php if($entry['commit']) e(format_time($entry['commit']['committer-date'])); ?></td>
 		<td><?php if($entry['commit'])
 		{
 		    $subj = $entry['commit']['subject'];
