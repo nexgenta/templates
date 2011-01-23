@@ -1,0 +1,67 @@
+<?php require_once(dirname(__FILE__) . '/header.php'); ?>
+<article class="tree">
+  <header id="commit-info">
+	<h1><a href="#"><?php e($info['subject']); ?></a></h1>
+	<p class="rp author">
+	  <img src="http://www.gravatar.com/avatar/<?php e(md5($info['author-email'])); ?>?s=32&d=mm&r=g" alt="">
+	  <span class="rp-name"><?php e($info['author-name']); ?></span> (Author)
+	</p>
+	<?php if(true || strcmp($info['author-email'], $info['committer-email'])) { ?>
+	<p class="rp committer">
+	  <img src="http://www.gravatar.com/avatar/<?php e(md5($info['committer-email'])); ?>?s=32&d=mm&r=g" alt="">
+	  <span class="rp-name"><?php e($info['committer-name']); ?></span> (Committer)
+	</p>
+
+	<?php } ?>
+  </header>
+  
+  <table class="tree">
+	<thead>
+	  <tr>
+		<th scope="col">Name</th>
+		<th scope="col">Age</th>
+		<th scope="col">Message</th>
+	  </tr>
+	</thead>
+	<tbody>
+<?php
+   if($parent !== null)
+   {
+      echo '<tr><td><a href="' . _e($pageUri . $parent) . '">..</a></td><td>&nbsp;</td><td>&nbsp;</td></tr>';
+   }
+   foreach($objects as $entry)
+{
+?>
+      <tr>
+		<td class="<?php e($entry['type']); ?>">
+<?php
+   if($entry['type'] == 'subdir')
+   {
+       echo '<a href="' . _e($pageUri . $entry['path']) . '">';
+   }
+   else
+   {
+       echo '<a href="#">';
+   }
+   e($entry['name']);
+   echo '</a>';
+   ?></td>
+		<td><?php if($entry['commit']) e($entry['commit']['committer-date']); ?></td>
+		<td><?php if($entry['commit'])
+		{
+		    $subj = $entry['commit']['subject'];
+			if(strlen($subj) > 50)
+			{
+				$subj = substr($subj, 0, 47) . '...';
+			}
+			e($subj . ' [' . $entry['commit']['committer-name'] . ']');
+		}
+ ?></td>
+	  </tr>
+<?php
+}
+?>
+	</tbody>
+  </table>
+</article>
+<?php require_once(dirname(__FILE__) . '/footer.php'); ?>

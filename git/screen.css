@@ -1,0 +1,41 @@
+#commit-info {
+	background: #DCE7EB;
+	padding: 8px;
+	-webkit-border-radius: 6px 6px;
+	-moz-border-radius: 6px;
+	margin: 0 0 1em 0;
+}
+#commit-info img {
+	outline: solid #aaa 1px;
+	border: solid #fff 2px;
+}
+
+table.tree {
+	background: #F4F4F4;
+	margin: 0 0 1em 0;
+	border-collapse: collapse;
+	border: solid #d8d8d8 1px;
+	width: 100%;
+	font-family: Monaco, 'Courier New', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', monospace;
+	font-size: 93%;
+}
+table.tree a {
+	font-weight: normal;
+}
+table.tree tr, table.tree td, table.tree th {
+	border: none;
+}
+table.tree td, table.tree th {
+	padding: 6px;
+}
+table.tree thead {
+	background: #eaeaea;
+	color: #888;
+	text-transform: lowercase;
+}
+table.tree th, table.tree td {
+	border-bottom: solid #d8d8d8 1px;
+}
+table.tree tbody>tr {
+	background: -webkit-gradient(linear, 0 0, 0 100%, from(#fff), to(#efefef));
+}
